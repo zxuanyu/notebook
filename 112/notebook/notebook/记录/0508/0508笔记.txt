@@ -1,0 +1,14 @@
+今日完成：
+1.安装并测试了Geomagic Studio软件；可以使用该软件在作图时（1）点阶段：点云去噪（去除离群点和错误的点），然后点云压缩，点云数据封装；
+（2）多边形阶段；（3）形状阶段；
+参考书籍：
+【1】《海量点云数据处理理论与技术》P126-139页；
+2.使用PCL中的显示模块进行查看点云移除离群点后的效果；《点云库PCL学习教程》7.3.1；代码：D:\VS_project\ConsoleApplication16\ConsoleApplication16；
+3.使用PCL中的StatisticalOutlierRemoval滤波器移除离群点；《点云库PCL学习教程》8.3.3：代码：D:\VS_project\ConsoleApplication16 - 副本\ConsoleApplication16
+参考书籍：
+【1】PCL的实现论文以及代码库：论文： R. B. Rusu, Z. C. Marton, N. Blodow, M. Dolha, and M. Beetz.
+Towards 3D Point Cloud Based Object Maps for Household Environments
+Robotics and Autonomous Systems Journal (Special Issue on Semantic Knowledge), 2008.
+【2】PCL的代码库：http://docs.pointclouds.org/trunk/classpcl_1_1_statistical_outlier_removal.html
+【3】中文文献：三维点云数据的离群点检测和模型重建_赵鹏
+4.根据outliers.pcd和inliers.pcd文件获取已经解码的像素位置，从而得到像素对应的编码值：pDeviceCodeH, pDeviceCodeV；可以产生掩码图像；

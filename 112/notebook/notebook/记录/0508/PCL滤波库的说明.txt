@@ -1,0 +1,33 @@
+/** \brief @b StatisticalOutlierRemoval uses point neighborhood statistics to filter outlier data.
+   49     * \details The algorithm iterates through the entire input twice:
+   50     * During the first iteration it will compute the average distance that each point has to its nearest k neighbors.
+   51     * The value of k can be set using setMeanK().
+   52     * Next, the mean and standard deviation of all these distances are computed in order to determine a distance threshold.
+   53     * The distance threshold will be equal to: mean + stddev_mult * stddev.
+   54     * The multiplier for the standard deviation can be set using setStddevMulThresh().
+   55     * During the next iteration the points will be classified as inlier or outlier if their average neighbor distance is below or above this threshold respectively.
+   56     * <br>
+   57     * The neighbors found for each query point will be found amongst ALL points of setInputCloud(), not just those indexed by setIndices().
+   58     * The setIndices() method only indexes the points that will be iterated through as search query points.
+   59     * <br><br>
+   60     * For more information:
+   61     *   - R. B. Rusu, Z. C. Marton, N. Blodow, M. Dolha, and M. Beetz.
+   62     *     Towards 3D Point Cloud Based Object Maps for Household Environments
+   63     *     Robotics and Autonomous Systems Journal (Special Issue on Semantic Knowledge), 2008.
+   64     * <br><br>
+   65     * Usage example:
+   66     * \code
+   67     * pcl::StatisticalOutlierRemoval<PointType> sorfilter (true); // Initializing with true will allow us to extract the removed indices
+   68     * sorfilter.setInputCloud (cloud_in);
+   69     * sorfilter.setMeanK (8);
+   70     * sorfilter.setStddevMulThresh (1.0);
+   71     * sorfilter.filter (*cloud_out);
+   72     * // The resulting cloud_out contains all points of cloud_in that have an average distance to their 8 nearest neighbors that is below the computed threshold
+   73     * // Using a standard deviation multiplier of 1.0 and assuming the average distances are normally distributed there is a 84.1% chance that a point will be an inlier
+   74     * indices_rem = sorfilter.getRemovedIndices ();
+   75     * // The indices_rem array indexes all points of cloud_in that are outliers
+   76     * \endcode
+   77     * \author Radu Bogdan Rusu
+   78     * \ingroup filters
+   79     */
+ÍøÕ¾£ºhttp://docs.pointclouds.org/trunk/classpcl_1_1_statistical_outlier_removal.html
