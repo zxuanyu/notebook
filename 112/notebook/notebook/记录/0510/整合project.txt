@@ -1,0 +1,16 @@
+1.C:\Users\jo\Desktop\123\code\cuda_No3 - 实验，动态的备份\3_Imaging\HSOpticalFlow
+用于测量第一次xor编码的结果,以及写出各种中间过程图片；
+2.C:\Users\jo\Documents\Visual Studio 2013\Projects\make_pattern_compute_Lg\make_pattern
+根据Ld图片和第二次xor投影的全白情况下的图片来计算出Lg；加速二值化；产生中间图片可用于写文章；
+3.C:\Users\jo\Documents\Visual Studio 2013\Projects\make_pattern - 副本\make_pattern
+根据去噪后的图片产生mask图案，产生第二次xor投影的图案；
+4.C:\Users\jo\Desktop\123\code\cuda_No3 - 测试原始投影图，调合适的m,b值\3_Imaging\HSOpticalFlow
+用于产生传统格雷码编码下，三维测量结果（error）
+5.D:\VS_project\ConsoleApplication16 - 副本\ConsoleApplication16
+根据0.pcd文件进行去噪
+6.D:\VS_project\ConsoleApplication16\ConsoleApplication16
+用于查看pcd文件；
+7.C:\Users\jo\Desktop\123\code\cuda_No3 - 实验，动态的备份 - 第二次求三维信息\3_Imaging\HSOpticalFlow
+用于产生第二次xor的结果图，其中（目前是！！！）使用自己的投影图进行estimate，而不用第二个文件的project进行加速二值化；
+8.C:\Users\jo\Documents\Visual Studio 2013\Projects\make_pattern - 合并两个次pcd文件\make_pattern
+将两次xor文件进行合成（目前没有测试完成！！！！！！）
