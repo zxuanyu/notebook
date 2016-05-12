@@ -1,0 +1,121 @@
+﻿1.用于产生传统格雷码编码下，三维测量结果（error）：
+C:\Users\jo\Desktop\123\code\cuda_No3 - 测试原始投影图，调合适的m,b值\3_Imaging\HSOpticalFlow
+2.用于测量第一次xor编码的结果,以及写出各种中间过程图片：
+C:\Users\jo\Desktop\123\code\cuda_No3 - 实验，动态的备份 - 第一次求三维信息\3_Imaging\HSOpticalFlow
+3.根据0.pcd文件进行去噪：
+D:\VS_project\ConsoleApplication16 - 副本\ConsoleApplication16
+4.根据去噪后的图片产生mask图案，产生第二次xor投影的图案：
+C:\Users\jo\Documents\Visual Studio 2013\Projects\make_pattern - 副本\make_pattern
+5.用于产生第二次xor的结果图，其中（目前是！！！）使用自己的投影图进行estimate，而不用第project 6 进行加速二值化：
+C:\Users\jo\Desktop\123\code\cuda_No3 - 实验，动态的备份 - 第二次求三维信息\3_Imaging\HSOpticalFlow
+6.根据Ld图片和第二次xor投影的全白情况下的图片来计算出Lg；加速二值化；产生中间图片可用于写文章；
+C:\Users\jo\Documents\Visual Studio 2013\Projects\make_pattern_compute_Lg\make_pattern
+7.将两次xor文件进行合成为一个pcd文件：
+C:\Users\jo\Documents\Visual Studio 2013\Projects\make_pattern - 合并两个次pcd文件\make_pattern
+8.用于查看pcd文件：
+D:\VS_project\ConsoleApplication16\ConsoleApplication16
+
+
+
+-------------------------------------------
+project1：
+输入：
+1）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//0510//calibration.yml";
+2）采集图像文件名：string pic_fileName = "C://Users//jo//Desktop//112//0510//n//cam_";
+输出：
+1）Ld、Lg输出：“C://Users//jo//Desktop//112//Ld.bmp”；
+2）二值化输出："C://Users//jo//Desktop//112//"+".bmp";
+3）解码输出：“C://Users//jo//Desktop//112//decode.jpg”；
+4）三维点云输出ply文件：“C://Users//jo//Desktop//test//ply_file//background_result.ply”；
+5）三维点云输出pcd文件：“C:\\Users\\jo\\Desktop\\test\\point_cloud_data\\0.pcd"；
+
+project2：
+输入：
+1）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//0510//calibration.yml";
+2）采集图像文件名：string pic_fileName = "C://Users//jo//Desktop//112//0510//x//cam_";
+3）estimate图像文件名：string estimate_fileName = "C://Users//jo//Desktop//112//0510//n//cam_";
+4）estimate的开始图像：int start = 13;（第13张开始）
+输出：
+1）Ld、Lg输出：“C://Users//jo//Desktop//112//Ld.bmp”；
+2）二值化输出："C://Users//jo//Desktop//112//"+".bmp";
+3）解码输出：“C://Users//jo//Desktop//112//decode.jpg”；
+4）三维点云输出ply文件：“C://Users//jo//Desktop//test//ply_file//background_result.ply”；
+5）三维点云输出pcd文件：“C:\\Users\\jo\\Desktop\\test\\point_cloud_data\\0.pcd"；
+6）解码值文件xml:"C://Users//jo//Desktop//112//0509//pattern_image.xml"
+
+project3：
+输入：
+1）原始的三维点云pcd文件：input_fileName = "C://Users//jo//Desktop//112//0509//0.pcd";;
+输出：
+1）滤波内的点pcd文件：output_inliers_fileName = "C://Users//jo//Desktop//112//0509//0_inliers.pcd"；
+2）滤波外的点pcd文件：output_outliers_fileName = "C://Users//jo//Desktop//112//0509//0_outliers.pcd"
+
+project4：
+输入：
+1）原始的三维点云pcd文件：fileName_0 = "C://Users//jo//Desktop//112//0509//0.pcd"；
+2）被删除的三维点云pcd文件：fileName_out = "C://Users//jo//Desktop//112//0509//0_outliers.pcd";
+3）解码值数据（.xml数据）：xml_fileName = "C://Users//jo//Desktop//112//0509//pattern_image.xml";
+**4）**在函数中make_pattern（）的潜在输入：
+a)纵条纹的基础图案："C://Users//jo//Desktop//123//Patterns//test//xor04//original//15.jpg";
+b）横条纹的基础图案："C://Users//jo//Desktop//123//Patterns//test//xor04//original//33.jpg"；
+c）第二个基础图案：fileName_to_read = "C://Users//jo//Desktop//123//Patterns//test//xor04//original//"
+**5）**在函数中make_pattern_on_original（）的潜在输入：
+a）原始的投影图案：fileName_to_read = "C://Users//jo//Desktop//123//Patterns//test//xor04//original//"；
+输出：
+1）去噪后的pcd文件：output_fileName = "C://Users//jo//Desktop//112//0509//0_write.pcd"；
+2）相机视角的mask图像：output_fileName = "C://Users//jo//Desktop//112//0509//cam_mask.bmp"；
+3）投影仪视角的mask图像：output_fileName = "C://Users//jo//Desktop//112//0509//pro_mask.bmp"
+4）形态学处理后的投影仪视角的mask图像（考虑中间处理过程的图像）：output_fileName = "C://Users//jo//Desktop//112//0509//final_mask.bmp"；
+5）下一次投影的图案：fileName_to_write = "C://Users//jo//Desktop//123//Patterns//test//test//（1-36图案）"
+6）在原始图案上加mask：string fileName_to_write = "C://Users//jo//Desktop//123//Patterns//test//test//（101-136图案）"
+
+project5：
+输入：
+1）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//0510//calibration.yml";
+2）采集图像文件名：string pic_fileName = "C://Users//jo//Desktop//112//0510//x_1//cam_";
+3）estimate图像文件名：string estimate_fileName = "C://Users//jo//Desktop//112//0510//x_1//cam_";
+4）estimate的开始图像：int start = 13;（第13张开始）
+输出：
+1）Ld、Lg输出：“C://Users//jo//Desktop//112//Ld.bmp”；
+2）二值化输出："C://Users//jo//Desktop//112//"+".bmp";
+3）解码输出：“C://Users//jo//Desktop//112//decode.jpg”；
+4）三维点云输出ply文件：“C://Users//jo//Desktop//test//ply_file//background_result.ply”；
+5）三维点云输出pcd文件：“C:\\Users\\jo\\Desktop\\test\\point_cloud_data\\0.pcd"；
+6）解码值文件xml:"C://Users//jo//Desktop//112//0509//pattern_image.xml"
+
+project6：
+输入：
+1）上一次投影的Ld值：string Ld_fileName = "C://Users//jo//Desktop//112//Ld.bmp";
+2）本次投影的(全白色+mask)图案：string quanbai_fileName = "C://Users//jo//Desktop//112//bai.png";
+输出：
+1）p-Ld<=0的图像："C://Users//jo//Desktop//112//less_than_zero.bmp"；
+2）i<=itotal,计算出的本次Lg结果："C://Users//jo//Desktop//112//Lg.bmp";
+
+project7：
+---------第一部分：以/* */来分开：用于合并两次不同mask的pcd文件和xml文件
+输入：
+1）第一次去噪后的pcd文件：string final_pcd_fileName = "C://Users//jo//Desktop//112//0509//first.pcd";
+2）第二次去噪后的pcd文件：string file_2 = "C://Users//jo//Desktop//112//0509//second.pcd";
+*要用去噪后的pcd文件产生cam_mask;用于以下计算：
+3）第一次三维重建的投影编码xml信息：firstXml_fileName = "C://Users//jo//Desktop//112//0509//first_XML.xml";
+4）第二次三维重建的投影编码xml信息：seconedXml_fileName = "C://Users//jo//Desktop//112//0509//second_XML.xml";
+*用于合并xml：
+5）第一次三维重建的相机视角的mask：first_cam_mask_fileName = "C://Users//jo//Desktop//112//0509//first_cam_mask.bmp";
+6）第一次三维重建的相机视角的mask：second_cam_mask_fileName = "C://Users//jo//Desktop//112//0509//second_cam_mask.bmp";
+输出：
+1）两次去噪后融合在一起的pcd文件：output_fileName = "C://Users//jo//Desktop//112//0509//merge.pcd"；
+2）对应于pcd合并后的xml合并：string output_fileName = "C://Users//jo//Desktop//112//0509//pattern_image.xml";
+----------第二部分：以/* */来分开：用于根据xml和pcd来产生投影仪视角的mask以及下一轮的投影图案
+输入：
+1）pcd文件：string final_pcd_fileName = "C://Users//jo//Desktop//112//0509//merge.pcd";
+2）xml文件：string xml_fileName = "C://Users//jo//Desktop//112//0509//pattern_image.xml";
+输出：
+1）摄像机视角的mask：string output_fileName = "C://Users//jo//Desktop//112//0509//cam_mask.bmp";
+2）投影仪视角的mask：string output_fileName = "C://Users//jo//Desktop//112//0509//pro_mask.bmp";
+3）形态学处理后的投影仪视角的mask图像（考虑中间处理过程的图像）：output_fileName = "C://Users//jo//Desktop//112//0509//final_mask.bmp"；
+4）下一次投影的图案：fileName_to_write = "C://Users//jo//Desktop//123//Patterns//test//test//（1-36图案）"
+5）在原始图案上加mask：string fileName_to_write = "C://Users//jo//Desktop//123//Patterns//test//test//（101-136图案）"
+
+project8：
+输入：
+1）查看三维点云pcd文件：show_pcd_fileName = "C://Users//jo//Desktop//112//0509//0_inliers.pcd";
