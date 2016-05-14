@@ -1,0 +1,123 @@
+
+---------------
+功能：
+1.传统格雷码三维测量：D:\project_code\传统格雷码三维测量\3_Imaging\HSOpticalFlow
+【可改参数是bg_estimate_direct_light（）的估计Ld与Lg的基础图像，横条纹来估计产生的点更多？？猜测未试】
+输入文件：
+1）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//catalog//input//calib_result//calibration.yml"
+2）采集图像文件名：string pic_fileName = pic_fileName = "C://Users//jo//Desktop//112//catalog//input//normal//cam_";
+输出文件夹：（C:\Users\jo\Desktop\112\catalog\output\normal_output）
+1）Ld、Lg输出；
+2）二值化输出；
+3）解码输出；
+4）三维点云输出ply文件；
+5）三维点云输出pcd文件；
+
+2.xor三维测量：D:\project_code\传统格雷码三维测量\3_Imaging\HSOpticalFlow
+输入文件：
+1）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//catalog//input//calib_result//calibration.yml"
+2）采集图像文件名：string pic_fileName = pic_fileName = "C://Users//jo//Desktop//112//catalog//input//xor//cam_";
+3）estimate图像文件名：string estimate_fileName = "C://Users//jo//Desktop//112//catalog//input//xor//cam_";
+【可改参量，从normal文件中估计Ld与Lg】
+4）estimate的开始图像：int start = 13;（第13张开始）
+【可改参量，从第几张开始连续四张来估计Ld和Lg,横条纹来估计产生的点更多】
+输出文件夹：（C:\Users\jo\Desktop\112\catalog\output\xor_output）
+1）Ld、Lg输出；
+2）二值化输出；
+3）解码输出；
+4）三维点云输出ply文件；
+5）三维点云输出pcd文件；
+
+3.根据0.pcd文件进行去噪：D:\project_code\去噪
+【可变参量：滤波取邻域点的个数，影响计算量】
+输入：
+1）原始的三维点云pcd文件：input_fileName = "C://Users//jo//Desktop//112//catalog//input//filter//0.pcd";
+输出文件夹：（ C:\Users\jo\Desktop\112\catalog\output\filter）
+1）滤波内的点pcd文件;
+2）滤波外的点pcd文件;
+
+4.filter之后的合并pcd文件：D:\project_code\合并同一次投影产生的pcd文件
+输入：
+1）原始的三维点云pcd文件：fileName_0 = "C://Users//jo//Desktop//112//catalog//input//filter_merge//0.pcd";
+2）滤波后属于滤波之外的点的pcd文件：fileName_out = "C://Users//jo//Desktop//112//catalog//input//filter_merge//0_outliers.pcd";
+输出文件夹：（ C:\Users\jo\Desktop\112\catalog\output\filter）
+1）合并后的文件；
+
+
+5.根据pcd文件产生cam_mask：D:\project_code\根据p根据pcd产生cam_mask
+输入：
+1）三维点云pcd文件：final_pcd_fileName = "C://Users//jo//Desktop//112//catalog//input//make_cam_mask//0.pcd";
+输出文件夹：（ C:\Users\jo\Desktop\112\catalog\output\make_cam_mask）
+1）相机视角的mask；
+
+
+6.根据cam_mask和对应产生cam_mask的pcd的同一阶段的xml文件来产生下一轮的投影图案（【注意】：如果pcd是由两次不同阶段合并的，那么需要将xml文件合并，然后cam_mask使用的是合并后的pcd文件产生的）：D:\project_code\用于产生下一轮的投影图案
+【可变参量：用于产生投影图案的基础编码图案，这里使用的是15和33图案】
+输入：
+1）cam_mask文件：cam_mask_fileName = "C://Users//jo//Desktop//112//catalog//input//make_project_pattern//cam_mask.bmp";
+2）xml文件："C://Users//jo//Desktop//112//catalog//input//make_project_pattern//pattern_image.xml";
+3）基础图案的位置："C://Users//jo//Desktop//123//Patterns//test//xor04//original//15.jpg"以及"C://Users//jo//Desktop//123//Patterns//test//xor04//original//33.jpg"
+输出文件夹：（ C:\Users\jo\Desktop\112\catalog\output\make_project_pattern）
+1）投影仪视角的mask；
+2）形态学处理后最终的投影mask;【考虑是否将形态学处理过程的图片输出存下来】
+3）下一轮的投影图案；
+
+7.合并两个不同阶段pcd（去噪后的），然后将xml文件合并（使用了去噪后pcd产生的cam_mask，以及这两轮的xml文件）：D:\project_code\合并两个次pcd文件与xml
+输入：
+1）第一次去噪后的pcd文件：final_pcd_fileName = "C://Users//jo//Desktop//112//catalog//input//merge_two_stage//first.pcd";
+2）第二次去噪后的pcd文件："C://Users//jo//Desktop//112//catalog//input//merge_two_stage//second.pcd";
+*要用去噪后的pcd文件产生cam_mask;用于以下计算：
+3）第一次三维重建的投影编码xml信息："C://Users//jo//Desktop//112//catalog//input//merge_two_stage//first_XML.xml";
+4）第二次三维重建的投影编码xml信息："C://Users//jo//Desktop//112//catalog//input//merge_two_stage//second_XML.xml";
+*用于合并xml：
+5）第一次三维重建的相机视角的mask："C://Users//jo//Desktop//112//catalog//input//merge_two_stage//first_cam_mask.bmp";
+6）第一次三维重建的相机视角的mask："C://Users//jo//Desktop//112//catalog//input//merge_two_stage//second_cam_mask.bmp";
+输出：（C:\Users\jo\Desktop\112\catalog\output\merge_two_stage）
+1）两次去噪后融合在一起的pcd文件；
+2）对应于pcd合并后的xml合并文件；
+
+8.显示pcd文件：D:\project_code\show_pcd
+输入：
+1）将要显示的文件：show_pcd_fileName = "C://Users//jo//Desktop//112//catalog//input//show_pcd//merge.pcd";
+
+9.根据Ld图片和第二次xor投影的全白情况下的图片来计算出Lg；加速二值化；产生中间图片可用于写文章；D:\project_code\有上一轮的Ld图片和这一轮的全白投影计算Lg
+输入：
+1）上一次投影的Ld值："C://Users//jo//Desktop//112//catalog//input//compute_Lg//Ld.bmp";
+2）本次投影的(全白色+mask)图案："C://Users//jo//Desktop//112//catalog//input//compute_Lg//bai.png";
+输出：C:\Users\jo\Desktop\112\catalog\output\compute_Lg
+1）p-Ld<=0的图像；
+2）i<=itotal,计算出的本次Lg结果；
+
+10.对于有mask的传统格雷码重构：D:\project_code\有掩码的三维重构
+【对解码值进行掩码操作：防止错点的计算】
+输入：
+1）cam_mask的位置： mask = cv::imread("C://Users//jo//Desktop//112//catalog//output//cam_mask_morphology//final_mask.bmp",0);
+输入文件：
+2）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//catalog//input//calib_result//calibration.yml"
+3）采集图像文件名：string pic_fileName = pic_fileName = "C://Users//jo//Desktop//112//catalog//input//normal//cam_";
+输出文件夹：（C:\Users\jo\Desktop\112\catalog\output\normal_output）
+1）Ld、Lg输出；
+2）二值化输出；
+3）解码输出；
+4）三维点云输出ply文件；
+5）三维点云输出pcd文件；
+
+11.对原始的cam_mask进行形态学操作：D:\project_code\(xin)根据cam_mask来产生不解码的部分
+输入：
+1）相机视角掩码的位置：cam_mask_fileName = "C://Users//jo//Desktop//112//catalog//input//cam_mask_morphology//cam_mask.bmp";
+输出文件夹：C:\Users\jo\Desktop\112\catalog\output\cam_mask_morphology
+1）形态学处理后的掩码图像；
+
+12.针对于掩码投影后，使用的是传统格雷码方法，进行重构：D:\project_code\(xin)传统格雷码三维测量_针对于掩码的结果_存放在normal中
+【可变参量：estimate的图像不同，结果不同；使用横条纹的投影图进行estimate比较准】
+【注：LoadImage36是从第一张开始加载的】
+输入：
+输入文件：
+1）标定文件名：string calib_fileName = "C://Users//jo//Desktop//112//catalog//input//calib_result//calibration.yml"
+2）采集图像文件名：string pic_fileName = pic_fileName = "C://Users//jo//Desktop//112//catalog//input//normal//cam_";
+输出文件夹：（C:\Users\jo\Desktop\112\catalog\output\normal_output）
+1）Ld、Lg输出；
+2）二值化输出；
+3）解码输出；
+4）三维点云输出ply文件；
+5）三维点云输出pcd文件；
